@@ -1,0 +1,128 @@
+Started by user Pragathi Ramji
+Obtained Jenkinsfile from git https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/CloudNote-Pipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/CloudNote-Pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git # timeout=10
+Fetching upstream changes from https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 4de285dc6b568508d6b8e5ce8ba6d6d87bc86283 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4de285dc6b568508d6b8e5ce8ba6d6d87bc86283 # timeout=10
+Commit message: "Update README.md"
+ > git rev-list --no-walk 4de285dc6b568508d6b8e5ce8ba6d6d87bc86283 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Clone Code)
+[Pipeline] git
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/CloudNote-Pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git # timeout=10
+Fetching upstream changes from https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --tags --force --progress -- https://github.com/Pragathiramji96/Cloud_DevOps-Projects.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+Checking out Revision 4de285dc6b568508d6b8e5ce8ba6d6d87bc86283 (refs/remotes/origin/main)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 4de285dc6b568508d6b8e5ce8ba6d6d87bc86283 # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git branch -D main # timeout=10
+ > git checkout -b main 4de285dc6b568508d6b8e5ce8ba6d6d87bc86283 # timeout=10
+Commit message: "Update README.md"
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker Image)
+[Pipeline] sh
++ docker build -t cloudnote-app:latest .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 185B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/python:3.12-slim
+#2 DONE 1.1s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 6.10kB 0.0s done
+#4 DONE 0.1s
+
+#5 [1/5] FROM docker.io/library/python:3.12-slim@sha256:804ddf3251a60bbf9c92e73b7566c40428d54d0e79d3428194edf40da6521286
+#5 resolve docker.io/library/python:3.12-slim@sha256:804ddf3251a60bbf9c92e73b7566c40428d54d0e79d3428194edf40da6521286
+#5 resolve docker.io/library/python:3.12-slim@sha256:804ddf3251a60bbf9c92e73b7566c40428d54d0e79d3428194edf40da6521286 0.2s done
+#5 DONE 0.2s
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY requirements.txt .
+#7 CACHED
+
+#8 [4/5] RUN pip install -r requirements.txt
+#8 CACHED
+
+#9 [5/5] COPY . .
+#9 DONE 0.2s
+
+#10 exporting to image
+#10 exporting layers
+#10 exporting layers 0.2s done
+#10 exporting manifest sha256:9b6f1936e16faf268eaa266447ebe281fe1feda7c00e53da202c8d5ce6c1cf8e 0.0s done
+#10 exporting config sha256:954dce6c89553a8cc3afe1365559c953056e93264a6aee12c5f02e69b1996e86 0.1s done
+#10 exporting attestation manifest sha256:df9816de3e410ff5ae8ac76f91e49d47fce77e8b825572ce4123b6a0d1ef491c
+#10 exporting attestation manifest sha256:df9816de3e410ff5ae8ac76f91e49d47fce77e8b825572ce4123b6a0d1ef491c 0.1s done
+#10 exporting manifest list sha256:647ed2cdf49b7a7631615416edce678b56fbae882d0a6e83d3091aa97157a411 0.0s done
+#10 naming to docker.io/library/cloudnote-app:latest
+#10 naming to docker.io/library/cloudnote-app:latest 0.0s done
+#10 unpacking to docker.io/library/cloudnote-app:latest
+#10 unpacking to docker.io/library/cloudnote-app:latest 0.2s done
+#10 DONE 0.7s
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Container)
+[Pipeline] sh
++ docker stop cloudnote
+cloudnote
++ docker rm cloudnote
+cloudnote
++ docker run -d --name cloudnote -p 5000:5000 cloudnote-app:latest
+156247da1cd904c4bdb5488641139b8fe3456b3bea90eb91dd32bf5525ca8036
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+Deployment successful!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

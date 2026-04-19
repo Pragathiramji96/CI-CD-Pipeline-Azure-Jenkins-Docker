@@ -35,13 +35,13 @@ docker run -d -p 5000:5000 cloudnote-app
 ## Screenshots
 
 ### ✅ Application Running on Azure
-![App](app_working screenshot.png)
+![App](App.png)
 
 ### ✅ Jenkins Pipeline Success
-![Jenkins](jenkins_Successful.png)
+![Jenkins](Jenkins_Successful.png)
 
 ### ✅ Azure VM Dashboard
-![Azure](azure-vm.png)
+![Azure](Azure-vm.png)
 ### Live App
 ![App Running](docs/app-screenshot.png)
 
